@@ -1,0 +1,17 @@
+{
+  "name": "Measury / pull data bot",
+  "version": "0.1",
+  "manifest_version": 3,
+
+  "background": {"service_worker": "b.js"},
+  
+  "permissions": ["tabs"],
+
+  "content_scripts": [
+    {
+      "matches": [ "*://*/*" ],
+      "all_frames": true,
+      "js": ["s.js"]
+    }
+  ]
+}
