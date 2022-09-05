@@ -56,8 +56,15 @@ function update() {
     return r.json();
   }).then(function(data) {
     data.forEach(function(p) { fetch_value(p); });
-    setTimeout(update, 60 * 10 * 1000);
   });
 }
 
-update();
+//update();
+
+
+
+chrome.alarms.create({ delayInMinutes: 5 });
+chrome.alarms.onAlarm.addListener(() => {
+  console.log('.');
+  update();
+});

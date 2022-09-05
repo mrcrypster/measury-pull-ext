@@ -5,7 +5,7 @@
 
   "background": {"service_worker": "b.js"},
   
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "alarms"],
 
   "content_scripts": [
     {
