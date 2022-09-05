@@ -28,3 +28,36 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     chrome.tabs.remove(sender.tab.id);
   }
 });
+
+
+
+
+// --- Background fetch processing ---
+
+function fetch_value(pull) {
+  try {
+    chrome.tabs.create({ url: pull.url, active: false}, function(t) {
+      setTimeout(function() {
+        chrome.tabs.sendMessage(t.id, pull, function(response) {
+          setTimeout(function() {
+            chrome.tabs.remove(t.id);
+          }, 5000);
+        });
+      }, 5000);
+    });
+  }
+  catch ( e ) {
+    console.log(e);
+  }
+}
+
+function update() {
+  fetch('https://measury.io/m/pulls?json=1').then(function(r) {
+    return r.json();
+  }).then(function(data) {
+    data.forEach(function(p) { fetch_value(p); });
+    setTimeout(update, 60 * 10 * 1000);
+  });
+}
+
+update();
